@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloggerDotNet", "BloggerDotNet\BloggerDotNet.csproj", "{13F34EB8-0388-4C22-91B8-D82C5C50DC11}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{AA946BD3-41B2-469A-B775-FFC158512A5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloggerDotNet.Core", "BloggerDotNet.Core\BloggerDotNet.Core.csproj", "{40F452F2-ED47-45F4-85EA-4906C6E464D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +13,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{13F34EB8-0388-4C22-91B8-D82C5C50DC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{13F34EB8-0388-4C22-91B8-D82C5C50DC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{13F34EB8-0388-4C22-91B8-D82C5C50DC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{13F34EB8-0388-4C22-91B8-D82C5C50DC11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40F452F2-ED47-45F4-85EA-4906C6E464D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40F452F2-ED47-45F4-85EA-4906C6E464D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40F452F2-ED47-45F4-85EA-4906C6E464D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40F452F2-ED47-45F4-85EA-4906C6E464D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40F452F2-ED47-45F4-85EA-4906C6E464D4} = {AA946BD3-41B2-469A-B775-FFC158512A5A}
 	EndGlobalSection
 EndGlobal
