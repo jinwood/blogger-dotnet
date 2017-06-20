@@ -1,9 +1,18 @@
-﻿namespace BloggerDotNet.Core.Objects
+﻿using System;
+
+namespace BloggerDotNet.Core.Objects
 {
-    public class Post: LifeTimeBase
+    public class Post
     {
         public int PostId { get; set; }
-        public string PostReference { get; set; }
+        public string Reference { get; }
 
+        public DateTime DateCreated { get; }
+
+        public Post(DateTime dateCreated) //pass in a reference generator
+        {
+            DateCreated = dateCreated;
+            Reference = string.Empty; //generate the reference
+        }
     }
 }
