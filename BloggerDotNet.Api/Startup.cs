@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
+using BloggerDotNet.Core.Interfaces;
+using BloggerDotNet.Core.Services;
 
 namespace BloggerDotNet.Api
 {
@@ -60,7 +62,7 @@ namespace BloggerDotNet.Api
             container.RegisterMvcViewComponents(app);
 
             // Add application services. For instance:
-            //container.Register<IUserRepository, SqlUserRepository>(Lifestyle.Scoped);
+            container.Register<IPostService, PostService>(Lifestyle.Scoped);
 
             // Cross-wire ASP.NET services (if any). For instance:
             container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
