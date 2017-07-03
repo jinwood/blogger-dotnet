@@ -11,4 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.2" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
 </Project>

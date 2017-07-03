@@ -16,6 +16,7 @@ using BloggerDotNet.Core.Services;
 using BloggerDotNet.Data;
 using BloggerDotNet.Infrastructure;
 using AutoMapper;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace BloggerDotNet.Api
 {
@@ -52,6 +53,11 @@ namespace BloggerDotNet.Api
             new SimpleInjectorControllerActivator(container));
             services.AddSingleton<IViewComponentActivator>(
                 new SimpleInjectorViewComponentActivator(container));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "BloggerDotNet", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

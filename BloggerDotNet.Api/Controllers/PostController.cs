@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BloggerDotNet.Api.Controllers
 {
+    [Route("api/[controller]")]
     public class PostController : Controller
     {
         private readonly IPostService _postService;
@@ -19,10 +20,10 @@ namespace BloggerDotNet.Api.Controllers
             _mapper = mapper ?? throw new ArgumentNullException();
         }
 
-        public async Task<Post> CreatePost(PostModel model)
+        [HttpPost]
+        public async Task<PostModel> CreatePost([FromForm]PostModel model)
         {
-            var post = _mapper.Map<Post>(model);
-            var result = _postService.CreatePost(post);
+            var result = await _postService.CreatePost(_mapper.Map<Post>(model));
             return _mapper.Map<PostModel>(result);
         }
     }
