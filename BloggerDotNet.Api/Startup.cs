@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
@@ -16,12 +15,14 @@ using BloggerDotNet.Core.Interfaces;
 using BloggerDotNet.Core.Services;
 using BloggerDotNet.Data;
 using BloggerDotNet.Infrastructure;
+using AutoMapper;
 
 namespace BloggerDotNet.Api
 {
     public class Startup
     {
         private Container container = new Container();
+        private MapperConfiguration _mapperConfiguration { get; set; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -31,6 +32,11 @@ namespace BloggerDotNet.Api
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            _mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -40,8 +46,7 @@ namespace BloggerDotNet.Api
         {
             // Add framework services.
             services.AddMvc();
-
-            //services.AddDbContext<BloggerDotNetContext>(options => options.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=Gloodoo.Directory;Integrated Security=True;MultipleActiveResultSets=True"));
+            services.AddSingleton(sp => _mapperConfiguration.CreateMapper());
 
             services.AddSingleton<IControllerActivator>(
             new SimpleInjectorControllerActivator(container));

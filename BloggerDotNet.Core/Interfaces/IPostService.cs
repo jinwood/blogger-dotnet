@@ -1,14 +1,15 @@
 ﻿using BloggerDotNet.Core.Objects;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BloggerDotNet.Core.Interfaces
 {
     public interface IPostService
     {
-        List<Post> GetAllPosts();
-        Post GetPostByReference(string reference);
-        Post CreatePost(Post post);
-        bool DeletePost(string reference);
-        Post UpdatePost(Post post);
+        Task<List<Post>> GetAllPosts();
+        Task<List<Post>> GetPostByReference(string reference);
+        Task<Post> CreatePost(Post post);
+        Task<List<bool>> DeletePost(string reference);
+        Task<List<Post>> UpdatePost(Post post);
     }
 }
