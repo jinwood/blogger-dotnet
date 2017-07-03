@@ -17,7 +17,7 @@ namespace BloggerDotNet.Core.Objects
         public Post(DateTime dateCreated, IReferenceGenerator referenceGenerator)
         {
             DateCreated = dateCreated;
-            Reference = referenceGenerator.CreateString(Constants.CryptographicReferenceLength);
+            Reference = referenceGenerator.CreateReference(Constants.CryptographicReferenceLength);
         }
     }
 }

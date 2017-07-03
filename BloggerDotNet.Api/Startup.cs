@@ -15,6 +15,7 @@ using SimpleInjector.Lifestyles;
 using BloggerDotNet.Core.Interfaces;
 using BloggerDotNet.Core.Services;
 using BloggerDotNet.Data;
+using BloggerDotNet.Infrastructure;
 
 namespace BloggerDotNet.Api
 {
@@ -66,7 +67,9 @@ namespace BloggerDotNet.Api
             container.RegisterMvcViewComponents(app);
 
             // Add application services. For instance:
+            container.Register<IPostRepository, PostRepository>();
             container.Register<IPostService, PostService>(Lifestyle.Scoped);
+            container.Register<IReferenceGenerator, CryptographicReferenceGenerator>(Lifestyle.Scoped);
 
             // Cross-wire ASP.NET services (if any). For instance:
             container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());

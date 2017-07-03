@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using BloggerDotNet.Core.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System;
 
 namespace BloggerDotNet.Infrastructure
 {
-    public class CryptographicReferenceGenerator
+    public class CryptographicReferenceGenerator : IReferenceGenerator
     {
         public string CreateReference(int size)
         {

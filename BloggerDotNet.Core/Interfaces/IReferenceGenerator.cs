@@ -2,6 +2,6 @@
 {
     public interface IReferenceGenerator
     {
-        string CreateString(int size);
+        string CreateReference(int size);
     }
 }
