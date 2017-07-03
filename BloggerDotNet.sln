@@ -7,7 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{AA946BD3-4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloggerDotNet.Core", "BloggerDotNet.Core\BloggerDotNet.Core.csproj", "{40F452F2-ED47-45F4-85EA-4906C6E464D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloggerDotNet.Api", "BloggerDotNet.Api\BloggerDotNet.Api.csproj", "{F8CB6AC8-3396-4405-B920-C7B570807454}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloggerDotNet.Api", "BloggerDotNet.Api\BloggerDotNet.Api.csproj", "{F8CB6AC8-3396-4405-B920-C7B570807454}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7E17ECD5-6888-45DF-8DD5-1461E2E8BE4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloggerDotNet.Data", "BloggerDotNet.Data\BloggerDotNet.Data.csproj", "{B92E4406-3188-4A9A-A024-BB6D0847C970}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,11 +27,16 @@ Global
 		{F8CB6AC8-3396-4405-B920-C7B570807454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8CB6AC8-3396-4405-B920-C7B570807454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8CB6AC8-3396-4405-B920-C7B570807454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B92E4406-3188-4A9A-A024-BB6D0847C970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B92E4406-3188-4A9A-A024-BB6D0847C970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B92E4406-3188-4A9A-A024-BB6D0847C970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B92E4406-3188-4A9A-A024-BB6D0847C970}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{40F452F2-ED47-45F4-85EA-4906C6E464D4} = {AA946BD3-41B2-469A-B775-FFC158512A5A}
+		{B92E4406-3188-4A9A-A024-BB6D0847C970} = {7E17ECD5-6888-45DF-8DD5-1461E2E8BE4C}
 	EndGlobalSection
 EndGlobal

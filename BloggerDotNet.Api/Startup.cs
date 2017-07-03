@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
 using BloggerDotNet.Core.Interfaces;
 using BloggerDotNet.Core.Services;
+using BloggerDotNet.Data;
 
 namespace BloggerDotNet.Api
 {
@@ -37,6 +39,8 @@ namespace BloggerDotNet.Api
         {
             // Add framework services.
             services.AddMvc();
+
+            //services.AddDbContext<BloggerDotNetContext>(options => options.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=Gloodoo.Directory;Integrated Security=True;MultipleActiveResultSets=True"));
 
             services.AddSingleton<IControllerActivator>(
             new SimpleInjectorControllerActivator(container));
