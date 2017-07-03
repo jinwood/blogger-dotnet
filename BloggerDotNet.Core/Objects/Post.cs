@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BloggerDotNet.Core.Interfaces;
+using System;
 
 namespace BloggerDotNet.Core.Objects
 {
@@ -7,12 +8,16 @@ namespace BloggerDotNet.Core.Objects
         public int PostId { get; set; }
         public string Reference { get; }
 
-        public DateTime DateCreated { get; }
+        public string MdContent { get; set; }
+        public string HTMLContent { get; set; }
 
-        public Post(DateTime dateCreated) //pass in a reference generator
+        public DateTime DateCreated { get; }
+        public DateTime DateDeleted { get; set; }
+
+        public Post(DateTime dateCreated, IReferenceGenerator referenceGenerator)
         {
             DateCreated = dateCreated;
-            Reference = string.Empty; //generate the reference
+            Reference = referenceGenerator.CreateString(Constants.CryptographicReferenceLength);
         }
     }
 }
