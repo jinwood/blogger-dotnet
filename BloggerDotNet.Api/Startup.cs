@@ -89,8 +89,9 @@ namespace BloggerDotNet.Api
             container.Register<IPostRepository, PostRepository>();
             container.Register<IPostService, PostService>();
             container.Register<IReferenceGenerator, CryptographicReferenceGenerator>();
+            container.Register<IMarkdownProcessor, MarkdownProcessor>();
 
-            container.RegisterSingleton<IMapper>(_mapperConfiguration.CreateMapper());
+            container.RegisterSingleton(_mapperConfiguration.CreateMapper());
 
             // Cross-wire ASP.NET services (if any). For instance:
             container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());
