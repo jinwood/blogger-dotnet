@@ -5,6 +5,7 @@ using BloggerDotNet.Core.Objects;
 using System.Data.SqlClient;
 using Dapper;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BloggerDotNet.Data
 {
@@ -42,27 +43,61 @@ namespace BloggerDotNet.Data
             }
         }
 
-        public bool DeletePost(string reference)
+        public async Task<bool> DeletePost(string reference)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                var query = "DELETE FROM" +
+                                "dbo.Posts" +
+                                "WHERE Reference = @Reference";
+                await _dbConnection.ExecuteAsync(query, reference);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public Task<List<Post>> GetAllPosts()
+        public async Task<List<Post>> GetAllPublishedPosts()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = "SELECT " +
+                                "[Reference],[MdContent],[HtmlContent],[DateCreated]" +
+                                "FROM dbo.Posts" +
+                                "WHERE DateDeleted IS NULL";
+
+                var posts = await _dbConnection.QueryAsync<Post>(query).ConfigureAwait(false);
+                return posts.ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        public Task<Post> GetPostByReference(string reference)
+        public async Task<Post> GetPostByReference(string reference)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = "SELECT TOP 1" +
+                                "[Reference],[MdContent],[HtmlContent],[DateCreated]" +
+                                "FROM dbo.Posts" +
+                                "WHERE Reference = @Reference";
+
+                var posts = await _dbConnection.QueryFirstAsync<Post>(query, reference).ConfigureAwait(false);
+                return posts;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public Task<Post> UpdatePost(Post post)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<bool> IPostRepository.DeletePost(string reference)
         {
             throw new NotImplementedException();
         }

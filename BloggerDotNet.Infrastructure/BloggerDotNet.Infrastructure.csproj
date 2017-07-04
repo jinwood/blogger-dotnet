@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MarkdownSharpCore" Version="0.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BloggerDotNet.Core\BloggerDotNet.Core.csproj" />
   </ItemGroup>
 
