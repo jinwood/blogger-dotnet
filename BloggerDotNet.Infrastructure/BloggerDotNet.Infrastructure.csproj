@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BloggerDotNet.Core\BloggerDotNet.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
@@ -15,12 +14,16 @@ using SimpleInjector.Lifestyles;
 using BloggerDotNet.Core.Interfaces;
 using BloggerDotNet.Core.Services;
 using BloggerDotNet.Data;
+using BloggerDotNet.Infrastructure;
+using AutoMapper;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace BloggerDotNet.Api
 {
     public class Startup
     {
         private Container container = new Container();
+        private MapperConfiguration _mapperConfiguration { get; set; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -30,6 +33,11 @@ namespace BloggerDotNet.Api
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            _mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -39,13 +47,17 @@ namespace BloggerDotNet.Api
         {
             // Add framework services.
             services.AddMvc();
-
-            //services.AddDbContext<BloggerDotNetContext>(options => options.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=Gloodoo.Directory;Integrated Security=True;MultipleActiveResultSets=True"));
+            //services.AddSingleton(sp => _mapperConfiguration.CreateMapper());
 
             services.AddSingleton<IControllerActivator>(
             new SimpleInjectorControllerActivator(container));
             services.AddSingleton<IViewComponentActivator>(
                 new SimpleInjectorViewComponentActivator(container));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "BloggerDotNet", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +67,14 @@ namespace BloggerDotNet.Api
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BloggerDotNet API V1");
+            });
+
+            InitializeContainer(app);
+            container.Verify();
         }
 
         private void InitializeContainer(IApplicationBuilder app)
@@ -63,10 +83,14 @@ namespace BloggerDotNet.Api
 
             // Add application presentation components:
             container.RegisterMvcControllers(app);
+            
             container.RegisterMvcViewComponents(app);
 
-            // Add application services. For instance:
-            container.Register<IPostService, PostService>(Lifestyle.Scoped);
+            container.Register<IPostRepository, PostRepository>();
+            container.Register<IPostService, PostService>();
+            container.Register<IReferenceGenerator, CryptographicReferenceGenerator>();
+
+            container.RegisterSingleton<IMapper>(_mapperConfiguration.CreateMapper());
 
             // Cross-wire ASP.NET services (if any). For instance:
             container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());

@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 namespace BloggerDotNet.Core.Interfaces
 {
-    public interface IPostService
+    public interface IPostRepository
     {
         Task<List<Post>> GetAllPosts();
-        Task<List<Post>> GetPostByReference(string reference);
+        Task<Post> GetPostByReference(string reference);
         Task<Post> CreatePost(Post post);
-        Task<List<bool>> DeletePost(string reference);
-        Task<List<Post>> UpdatePost(Post post);
+        Task<bool> DeletePost(string reference);
+        Task<Post> UpdatePost(Post post);
     }
 }

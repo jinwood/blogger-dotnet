@@ -4,15 +4,17 @@ namespace BloggerDotNet.Core.Objects
 {
     public class Post
     {
-        public int PostId { get; set; }
-        public string Reference { get; }
+        public int PostId { get; }
+        public string Reference { get; set; }
 
-        public DateTime DateCreated { get; }
+        public string MdContent { get; set; }
+        public string HTMLContent { get; set; }
 
-        public Post(DateTime dateCreated) //pass in a reference generator
+        public DateTime DateCreated { get; set; }
+        public DateTime DateDeleted { get; set; }
+
+        public Post()
         {
-            DateCreated = dateCreated;
-            Reference = string.Empty; //generate the reference
         }
     }
 }

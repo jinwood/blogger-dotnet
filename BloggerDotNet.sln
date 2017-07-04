@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{AA946BD3-41B2-469A-B775-FFC158512A5A}"
 EndProject
@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloggerDotNet.Api", "Blogge
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7E17ECD5-6888-45DF-8DD5-1461E2E8BE4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloggerDotNet.Data", "BloggerDotNet.Data\BloggerDotNet.Data.csproj", "{B92E4406-3188-4A9A-A024-BB6D0847C970}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BloggerDotNet.Data", "BloggerDotNet.Data\BloggerDotNet.Data.csproj", "{B92E4406-3188-4A9A-A024-BB6D0847C970}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloggerDotNet.Infrastructure", "BloggerDotNet.Infrastructure\BloggerDotNet.Infrastructure.csproj", "{A62CCF07-4E30-4AC9-B23E-CC7A776A425F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{B92E4406-3188-4A9A-A024-BB6D0847C970}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B92E4406-3188-4A9A-A024-BB6D0847C970}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B92E4406-3188-4A9A-A024-BB6D0847C970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A62CCF07-4E30-4AC9-B23E-CC7A776A425F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A62CCF07-4E30-4AC9-B23E-CC7A776A425F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A62CCF07-4E30-4AC9-B23E-CC7A776A425F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A62CCF07-4E30-4AC9-B23E-CC7A776A425F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,5 +44,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{40F452F2-ED47-45F4-85EA-4906C6E464D4} = {AA946BD3-41B2-469A-B775-FFC158512A5A}
 		{B92E4406-3188-4A9A-A024-BB6D0847C970} = {7E17ECD5-6888-45DF-8DD5-1461E2E8BE4C}
+		{A62CCF07-4E30-4AC9-B23E-CC7A776A425F} = {7E17ECD5-6888-45DF-8DD5-1461E2E8BE4C}
 	EndGlobalSection
 EndGlobal
