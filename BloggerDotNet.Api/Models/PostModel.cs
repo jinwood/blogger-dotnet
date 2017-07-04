@@ -10,6 +10,6 @@ namespace BloggerDotNet.Api.Models
         public string HTMLContent { get; set; }
 
         public DateTime DateCreated { get; }
-        public DateTime DateDeleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿CREATE TABLE dbo.Posts(
+﻿CREATE DATABASE BloggerDotNet;
+
+CREATE TABLE dbo.Posts(
 	PostId int IDENTITY,
 	Reference varchar(15),
 	MdContent nvarchar(MAX),

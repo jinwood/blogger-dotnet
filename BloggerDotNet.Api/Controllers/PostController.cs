@@ -14,6 +14,7 @@ namespace BloggerDotNet.Api.Controllers
         private readonly IPostService _postService;
         private readonly IMapper _mapper;
 
+
         public PostController(IPostService postService, IMapper mapper)
         {
             _postService = postService ?? throw new ArgumentNullException();
@@ -21,10 +22,11 @@ namespace BloggerDotNet.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<PostModel> CreatePost([FromForm]PostModel model)
+        public async Task<PostModel> CreatePost([FromBody]PostModel model)
         {
             var result = await _postService.CreatePost(_mapper.Map<Post>(model));
             return _mapper.Map<PostModel>(result);
         }
+
     }
 }

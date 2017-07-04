@@ -47,7 +47,7 @@ namespace BloggerDotNet.Api
         {
             // Add framework services.
             services.AddMvc();
-            services.AddSingleton(sp => _mapperConfiguration.CreateMapper());
+            //services.AddSingleton(sp => _mapperConfiguration.CreateMapper());
 
             services.AddSingleton<IControllerActivator>(
             new SimpleInjectorControllerActivator(container));
@@ -67,6 +67,14 @@ namespace BloggerDotNet.Api
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BloggerDotNet API V1");
+            });
+
+            InitializeContainer(app);
+            container.Verify();
         }
 
         private void InitializeContainer(IApplicationBuilder app)
@@ -75,12 +83,14 @@ namespace BloggerDotNet.Api
 
             // Add application presentation components:
             container.RegisterMvcControllers(app);
+            
             container.RegisterMvcViewComponents(app);
 
-            // Add application services. For instance:
             container.Register<IPostRepository, PostRepository>();
-            container.Register<IPostService, PostService>(Lifestyle.Scoped);
-            container.Register<IReferenceGenerator, CryptographicReferenceGenerator>(Lifestyle.Scoped);
+            container.Register<IPostService, PostService>();
+            container.Register<IReferenceGenerator, CryptographicReferenceGenerator>();
+
+            container.RegisterSingleton<IMapper>(_mapperConfiguration.CreateMapper());
 
             // Cross-wire ASP.NET services (if any). For instance:
             container.RegisterSingleton(app.ApplicationServices.GetService<ILoggerFactory>());

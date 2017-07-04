@@ -11,19 +11,35 @@ namespace BloggerDotNet.Data
     public class PostRepository : DbBase, IPostRepository
     {
         private SqlConnection _dbConnection;
-        private SqlConnection DbConnection => _dbConnection ?? (_dbConnection = GetOpenConnection(true));
+
+        public PostRepository()
+        {
+            _dbConnection = GetOpenConnection(true);
+        }
 
         public async Task<Post> CreatePost(Post post)
         {
-            var result = await _dbConnection.QueryFirstAsync<Post>(
-                "INSERT INTO dbo.Posts (Reference, HtmlContent, MdContent, DateCreated) VALUES(@Reference, @HtmlContent, @MdContent, @DateCreated)", 
-                new {
+            try
+            {
+                var query = "INSERT INTO " +
+                                "dbo.Posts (Reference, HtmlContent, MdContent, DateCreated) " +
+                                "VALUES(@Reference, @HtmlContent, @MdContent, @DateCreated) " +
+                                "SELECT * FROM dbo.Posts WHERE Reference = @Reference";
+                var result = await _dbConnection.QueryFirstAsync<Post>(
+                    query,
+                    new
+                    {
                         Reference = post.Reference,
                         HtmlContent = post.HTMLContent,
                         MdContent = post.MdContent,
                         DateCreated = post.DateCreated
-                    }).ConfigureAwait(false);
-            return result;
+                    });
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public bool DeletePost(string reference)
