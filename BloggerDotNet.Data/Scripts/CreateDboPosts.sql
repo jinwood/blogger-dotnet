@@ -4,7 +4,6 @@ CREATE TABLE dbo.Posts(
 	PostId int IDENTITY,
 	Reference varchar(15),
 	MdContent nvarchar(MAX),
-	HtmlContent nvarchar(MAX),
 	DateCreated DateTime,
 	DateDeleted DateTime
 );

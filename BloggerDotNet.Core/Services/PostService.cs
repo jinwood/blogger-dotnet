@@ -10,11 +10,13 @@ namespace BloggerDotNet.Core.Services
     {
         private readonly IPostRepository _postRepository;
         private readonly IReferenceGenerator _referenceGenerator;
+        private readonly IMarkdownProcessor _markdownProcessor;
 
-        public PostService(IPostRepository postRepository, IReferenceGenerator referenceGenerator)
+        public PostService(IPostRepository postRepository, IReferenceGenerator referenceGenerator, IMarkdownProcessor markdownProcessor)
         {
             _postRepository = postRepository ?? throw new ArgumentNullException();
             _referenceGenerator = referenceGenerator ?? throw new ArgumentNullException();
+            _markdownProcessor = markdownProcessor ?? throw new ArgumentNullException();
         }
 
         public Task<Post> CreatePost(Post post)
@@ -32,9 +34,17 @@ namespace BloggerDotNet.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<Post>> GetAllPosts()
+        public async Task<List<Post>> GetAllPosts()
         {
-            throw new NotImplementedException();
+            var posts = await _postRepository.GetAllPublishedPosts();
+
+            if(posts == null) return null;
+
+            foreach(var post in posts)
+            {
+                post.HTMLContent = _markdownProcessor.ConvertToHTML(post.MdContent);
+            }
+            return posts;            
         }
 
         public Task<List<Post>> GetPostByReference(string reference)

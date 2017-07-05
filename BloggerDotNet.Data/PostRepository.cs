@@ -65,10 +65,7 @@ namespace BloggerDotNet.Data
         {
             try
             {
-                var query = "SELECT " +
-                                "[Reference],[MdContent],[HtmlContent],[DateCreated]" +
-                                "FROM dbo.Posts" +
-                                "WHERE DateDeleted IS NULL";
+                var query = "SELECT [Reference],[MdContent],[DateCreated] FROM dbo.Posts WHERE [DateDeleted] IS NULL";
 
                 var posts = await _dbConnection.QueryAsync<Post>(query).ConfigureAwait(false);
                 return posts.ToList();
@@ -84,7 +81,7 @@ namespace BloggerDotNet.Data
             try
             {
                 var query = "SELECT TOP 1" +
-                                "[Reference],[MdContent],[HtmlContent],[DateCreated]" +
+                                "[Reference],[MdContent],[DateCreated]" +
                                 "FROM dbo.Posts" +
                                 "WHERE Reference = @Reference";
 
