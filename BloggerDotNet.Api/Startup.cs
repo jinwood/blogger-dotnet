@@ -17,9 +17,6 @@ using BloggerDotNet.Data;
 using BloggerDotNet.Infrastructure;
 using AutoMapper;
 using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.AspNetCore.Authorization;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace BloggerDotNet.Api
 {
@@ -32,6 +29,7 @@ namespace BloggerDotNet.Api
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("auth.json", optional:false, reloadOnChange: true)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
@@ -62,23 +60,13 @@ namespace BloggerDotNet.Api
             {
                 c.SwaggerDoc("v1", new Info { Title = "BloggerDotNet", Version = "v1" });
             });
-
-            string domain = $"https://{Configuration["Auth0:Domain"]}/";
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("read:messages",
-                    policy => policy.Requirements.Add(new HasScopeRequirement("read:posts", domain)));
-                options.AddPolicy("create:messages",
-                    policy => policy.Requirements.Add(new HasScopeRequirement("create:posts", domain)));
-            });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddDebug();   
 
             app.UseMvc();
             app.UseSwagger();
@@ -87,12 +75,13 @@ namespace BloggerDotNet.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "BloggerDotNet API V1");
             });
 
-            var options = new JwtBearerOptions
+            var config = GetAuthConfig();
+            var authOptions = new JwtBearerOptions
             {
-                Audience = Configuration["Auth0:ApiIdentifier"],
-                Authority = $"https://{Configuration["Auth0:Domain"]}/"
+                Audience = config.ApiIdentifier,
+                Authority = $"https://{config.Domain}/"
             };
-            app.UseJwtBearerAuthentication(options);
+            app.UseJwtBearerAuthentication(authOptions);
 
 
             InitializeContainer(app);
@@ -122,6 +111,15 @@ namespace BloggerDotNet.Api
             // and on invocation resolves a MVC IViewBufferScope service for that request.
             container.RegisterSingleton<Func<IViewBufferScope>>(
                 () => app.GetRequestService<IViewBufferScope>());
+        }
+
+        private AuthConfig GetAuthConfig()
+        {
+            return new AuthConfig
+            {
+                Domain = Configuration["Auth0:Domain"],
+                ApiIdentifier = Configuration["Auth0:ApiIdentifier"]
+            };
         }
     }
 }
