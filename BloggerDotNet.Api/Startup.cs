@@ -17,6 +17,9 @@ using BloggerDotNet.Data;
 using BloggerDotNet.Infrastructure;
 using AutoMapper;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Authorization;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace BloggerDotNet.Api
 {
@@ -47,6 +50,7 @@ namespace BloggerDotNet.Api
         {
             // Add framework services.
             services.AddMvc();
+            services.AddAuthorization();
             //services.AddSingleton(sp => _mapperConfiguration.CreateMapper());
 
             services.AddSingleton<IControllerActivator>(
@@ -58,6 +62,16 @@ namespace BloggerDotNet.Api
             {
                 c.SwaggerDoc("v1", new Info { Title = "BloggerDotNet", Version = "v1" });
             });
+
+            string domain = $"https://{Configuration["Auth0:Domain"]}/";
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("read:messages",
+                    policy => policy.Requirements.Add(new HasScopeRequirement("read:posts", domain)));
+                options.AddPolicy("create:messages",
+                    policy => policy.Requirements.Add(new HasScopeRequirement("create:posts", domain)));
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +86,14 @@ namespace BloggerDotNet.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "BloggerDotNet API V1");
             });
+
+            var options = new JwtBearerOptions
+            {
+                Audience = Configuration["Auth0:ApiIdentifier"],
+                Authority = $"https://{Configuration["Auth0:Domain"]}/"
+            };
+            app.UseJwtBearerAuthentication(options);
+
 
             InitializeContainer(app);
             container.Verify();

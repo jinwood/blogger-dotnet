@@ -2,6 +2,7 @@
 using BloggerDotNet.Api.Models;
 using BloggerDotNet.Core.Interfaces;
 using BloggerDotNet.Core.Objects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace BloggerDotNet.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class PostController : Controller
     {
